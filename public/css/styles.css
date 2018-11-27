@@ -1,4 +1,33 @@
-h1 {
-  font-size: 2rem;
-  color: red;
+html {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+aside {
+  color: #fff;
+  height: 100vh;
+  grid-column: 1;
+  position: absolute;
+  width: 300px;
+  background: #000;
+}
+
+aside h1 {
+  color: #fff;
+  font-family: 'Black Han Sans', san-serif;
+  font-size: 6rem;
+  margin-bottom: 110%;
+  margin-top: 16%;
+  transform: rotate(-0.25turn);
+}
+
+main {
+  grid-column: 2;
 }
