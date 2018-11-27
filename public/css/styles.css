@@ -24,10 +24,31 @@ aside h1 {
   font-family: 'Black Han Sans', san-serif;
   font-size: 6rem;
   margin-bottom: 110%;
-  margin-top: 16%;
+  margin-top: 18%;
   transform: rotate(-0.25turn);
 }
 
 main {
   grid-column: 2;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.info-text {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.info-myName {
+  font-family: 'Do Hyeon', sans-serif;
+  margin-top: 70%;
+}
+
+.menu-icon {
+  height: 50px;
+  width: 50px;
 }
