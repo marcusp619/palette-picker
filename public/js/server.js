@@ -16,12 +16,19 @@ app.get('/api/v1/projects/palettes', (request, response) => {
   return response.json({ palettes });
 });
 
-app.get('/api/v1/palettes/:id', (request, response) => {
+app.get('/api/v1/projects/palettes/:id', (request, response) => {
   const { id } = request.params;
   const palette = app.locals.palettes.find(palette => palette.id === id);
 
   return response.status(200).json(palette);
 });
+
+app.delete('/api/v1/projects/palettes/:id', (request, response) => {
+  const { id } = request.params;
+  const palettes = app.locals.palettes.filter(palette => palette.id !== id);
+
+  return response.status(200).json(palettes);
+})
 
 app.get('/api/v1/projects', (request, response) => {
   const projects = app.locals.projects;
