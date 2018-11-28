@@ -1,3 +1,31 @@
+const createProject = (knex, project) => {
+  return knex('projects').insert({
+    name: project.name
+  }, 'id')
+  .then(projectId => {
+    let palettePromises = [];
+    
+    project.palettes.forEach(palette => {
+      palettePromises.push(
+        createPalette(knex, {
+          name,
+          hex_1: palette.hex_1,
+          hex_2: palette.hex_2,
+          hex_3: palette.hex_3,
+          hex_4: palette.hex_4,
+          hex_5: palette.hex_5,
+          hex_6: palette.hex_6,
+          project_id: projectId[0]
+        })
+      )
+    })
+    return Promise.all(palettePromises);
+  })
+}
+
+const createPalette = (knex, palette) => {
+  return knex('palettes').insert(palette)
+};
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
