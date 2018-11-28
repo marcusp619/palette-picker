@@ -11,7 +11,11 @@ app.use(express.static('./public'));
 app.set('port', process.env.PORT || 3000);
 
 app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
-  return response.json({palettes});
+  const { project_id } = request.params
+  
+  database('palettes').where('project_id', project_id).select()
+    .then(palette => response.status(200).json(palette))
+    .catch(error => console.log(`Error fetching project: ${error.message}`))
 });
 
 app.get('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
@@ -21,8 +25,8 @@ app.get('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
 });
 
 app.delete('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
-  const {id} = request.params;
-
+  const {id, project_id} = request.params;
+  
   return response.status(200).json(palettes);
 });
 
