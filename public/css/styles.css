@@ -52,3 +52,25 @@ header {
   height: 50px;
   width: 50px;
 }
+
+.palette-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5%; 
+  margin-top: 25%;  
+}
+
+.palette-squares {
+  background: peru;
+  border-radius: 4px;
+  height: 85px;
+  width: 85px;
+}
+
+.generate-btn {
+  border-radius: 4px;
+  display: block;
+  height: 45px;
+  margin: 0 auto;
+  width: 150px;
+}
