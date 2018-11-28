@@ -11,21 +11,17 @@ app.use(express.static('./public'));
 app.set('port', process.env.PORT || 3000);
 
 app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
-  const palettes = app.locals.palettes;
-
   return response.json({palettes});
 });
 
 app.get('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
   const {id} = request.params;
-  const palette = app.locals.palettes.find(palette => palette.id === id);
 
   return response.status(200).json(palette);
 });
 
 app.delete('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
   const {id} = request.params;
-  const palettes = app.locals.palettes.filter(palette => palette.id !== id);
 
   return response.status(200).json(palettes);
 });
@@ -43,10 +39,16 @@ app.get('/api/v1/projects', (request, response) => {
 
 app.post('/api/v1/projects', (request, response) => {
   const id = Date.now();
-  const {project} = request.body;
-  app.locals.projects.push(project);
+  const project = request.body;
 
-  return response.status(201).json({id, project});
+  database('projects')
+    .insert(project, 'id')
+    .then(project => {
+      response.status(201).json({id: project[0]});
+    })
+    .catch(error => {
+      response.status(500).json({error});
+    });
 });
 
 app.listen(app.get('port'), () => {
