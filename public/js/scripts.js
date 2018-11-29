@@ -19,3 +19,19 @@ const findNewColor = () => {
   }
   return newColors
 }
+
+class ColorPicker {
+  constructor() {
+    this.projects = [],
+  }
+
+  getColors = () => {
+  
+  }
+
+  addProject = project => {
+  
+  }
+
+  
+}
