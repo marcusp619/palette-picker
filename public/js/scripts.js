@@ -13,7 +13,7 @@ class ColorPicker {
     }
 
     return hexNum.join('');
-  };
+  }
 
   findNewColor() {
     const activeColors = document.querySelectorAll('.palette-squares');
@@ -25,21 +25,21 @@ class ColorPicker {
     console.log(newColors);
 
     activeColors.forEach((color, i) => {
-      color.setAttribute('style', `background-color:${newColors[i]}`)
-      console.log(color.parentElement.childNodes[0])
-    })
+      color.setAttribute('style', `background-color:${newColors[i]}`);
+      color.childNodes[1].innerText = newColors[i];
+    });
     return newColors;
-  };
+  }
 
-  addProject(project){};
+  addProject(project) {}
 
-  addPalette(palette){};
+  addPalette(palette) {}
 
-  deletePalette(palette){};
+  deletePalette(palette) {}
 
-  toggleFreeze(event){
+  toggleFreeze(event) {
     //toggle class active or disable
-  };
+  }
 }
 
 const newUser = new ColorPicker();
