@@ -1,4 +1,76 @@
-h1 {
-  font-size: 2rem;
-  color: red;
+html {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+aside {
+  color: #fff;
+  height: 100vh;
+  grid-column: 1;
+  position: absolute;
+  width: 300px;
+  background: #000;
+}
+
+aside h1 {
+  color: #fff;
+  font-family: 'Black Han Sans', san-serif;
+  font-size: 6rem;
+  margin-bottom: 110%;
+  margin-top: 18%;
+  transform: rotate(-0.25turn);
+}
+
+main {
+  grid-column: 2;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.info-text {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.info-myName {
+  font-family: 'Do Hyeon', sans-serif;
+  margin-top: 70%;
+}
+
+.menu-icon {
+  height: 50px;
+  width: 50px;
+}
+
+.palette-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5%; 
+  margin-top: 25%;  
+}
+
+.palette-squares {
+  background: peru;
+  border-radius: 4px;
+  height: 85px;
+  width: 85px;
+}
+
+.generate-btn {
+  border-radius: 4px;
+  display: block;
+  height: 45px;
+  margin: 0 auto;
+  width: 150px;
 }

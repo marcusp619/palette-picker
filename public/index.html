@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Palette Picker</title>
+    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Do+Hyeon" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
   </head>
   <body>
@@ -10,19 +11,22 @@
       <h1>Colors</h1>
       <section class="info-section">
         <p class="info-text">Lorem ipsum dolor amet beard scenester roof party yr. Narwhal godard DIY, authentic mustache cold-pressed beard hexagon before they sold out dreamcatcher ennui austin hammock fanny pack. Kickstarter bushwick leggings air plant paleo sriracha. Deep v af wayfarers pickled church-key </p>
-        <h3 class="info-myName">Mark</h3>
+        <h3 class="info-myName">Created by: Mark</h3>
     </aside>
+    <main>
     <header>
-      <h3>hambuger</h3>
+      <img class="menu-icon" src="../assets/menu.svg" alt="menu icon">
     </header>
     <section class="palette-section">
-      <div class="palette-squares"></div>
-      <div class="palette-squares"></div>
-      <div class="palette-squares"></div>
-      <div class="palette-squares"></div>
-      <div class="palette-squares"></div>
+      <div class="palette-container">
+        <div class="palette-squares"></div>
+        <div class="palette-squares"></div>
+        <div class="palette-squares"></div>
+        <div class="palette-squares"></div>
+        <div class="palette-squares"></div>
+      </div>
       <form>
-        <button>Generate New Palette!</button>
+        <button class="generate-btn">Generate New Palette!</button>
         <select>
           <option value="">--Please choose a project</option>
         </select>
@@ -64,6 +68,7 @@
           <button>Delete</button>
         </div>
     </section>
+    </main>
     <script type="text/javascript" src="js/scripts.js"></script>
   </body>
 </html>
