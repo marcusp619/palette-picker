@@ -16,7 +16,7 @@ app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
   database('palettes')
     .where('project_id', project_id)
     .select()
-    .then(palette => response.status(200).json(palette))
+    .then(palette => response.status(200).json({message: `Palette id ${id} successfully deleted`}))
     .catch(error => console.log(`Error fetching project: ${error.message}`));
 });
 
