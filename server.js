@@ -11,23 +11,38 @@ app.use(express.static('./public'));
 app.set('port', process.env.PORT || 3000);
 
 app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
-  const { project_id } = request.params
-  
-  database('palettes').where('project_id', project_id).select()
+  const {project_id} = request.params;
+
+  database('palettes')
+    .where('project_id', project_id)
+    .select()
     .then(palette => response.status(200).json(palette))
-    .catch(error => console.log(`Error fetching project: ${error.message}`))
+    .catch(error => console.log(`Error fetching project: ${error.message}`));
 });
 
-app.get('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
-  const {id} = request.params;
+app.post('/api/v1/projects/:project_id/palettes', (request, response) => {
+  const palette = request.body;
+  const {project_id} = request.params
 
-  return response.status(200).json(palette);
-});
+  database('palettes')
+    .insert({...palette, project_id}, 'id')
+    .then(palette => {
+      response.status(201).json({id: palette[0]})
+    })
+    .catch(error => {
+      resonse.status(500).json({ error });
+    })
+})
 
 app.delete('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
   const {id, project_id} = request.params;
-  
-  return response.status(200).json(palettes);
+
+  database('palettes')
+    .where('project_id', project_id)
+    .where('id', id)
+    .del()
+    .then(palette => response.status(200).json(palette))
+    .catch(error => console.log(`Error deleting palette: ${error.message}`));
 });
 
 app.get('/api/v1/projects', (request, response) => {
@@ -42,7 +57,6 @@ app.get('/api/v1/projects', (request, response) => {
 });
 
 app.post('/api/v1/projects', (request, response) => {
-  const id = Date.now();
   const project = request.body;
 
   database('projects')
