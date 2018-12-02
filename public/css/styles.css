@@ -1,76 +1,93 @@
 html {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
-aside {
-  color: #fff;
-  height: 100vh;
-  grid-column: 1;
-  position: absolute;
-  width: 300px;
-  background: #000;
-}
-
-aside h1 {
-  color: #fff;
-  font-family: 'Black Han Sans', san-serif;
-  font-size: 6rem;
-  margin-bottom: 110%;
-  margin-top: 18%;
-  transform: rotate(-0.25turn);
-}
-
-main {
-  grid-column: 2;
+  background: url(../assets/polygon.svg);
+  background-size: 25%;
+  background-position-x: right;
+  background-repeat: no-repeat;
 }
 
 header {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
 }
 
-.info-text {
-  font-family: 'Do Hyeon', sans-serif;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-
-.info-myName {
-  font-family: 'Do Hyeon', sans-serif;
-  margin-top: 70%;
-}
-
-.menu-icon {
+.logo-img {
   height: 50px;
+  margin-right: 25px;
   width: 50px;
 }
 
+.logo-name {
+  color: #432534;
+  font-family: 'Lobster', cursive;
+}
+
+.hero-section {
+  margin: 15% 0 10vh 15%;
+  width: 585px;
+}
+
+.hero-title {
+  font-family: Open Sans;
+  font-size: 45px;
+  color: #04151f;
+}
+
+.hero-text {
+  font-family: Open Sans;
+  font-size: 16px;
+  color: #000000;
+  text-align: left;
+  line-height: 35px;
+}
+
+.hero-scroll-btn {
+  background: #ffffff;
+  border-radius: 25px;
+  box-shadow: -1px 4px 7px 2px rgba(0, 0, 0, 0.5);
+  font-family: Open Sans, sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  color: #432534;
+  text-align: center;
+  width: 350px;
+  height: 50px;
+  margin-top: 10px;
+}
+
+.down-arrow {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10%;
+}
+
+
+main {
+  display: grid;
+}
+
 .palette-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
   justify-content: space-around;
-  margin-bottom: 5%; 
-  margin-top: 25%;  
 }
 
 .palette-squares {
-  background: peru;
-  border-radius: 4px;
-  height: 85px;
-  width: 85px;
+  height: 300px;
+  width: 300px;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
 }
 
-.generate-btn {
-  border-radius: 4px;
-  display: block;
-  height: 45px;
-  margin: 0 auto;
-  width: 150px;
+.palette-hex {
+  font-size: 2em;
 }
+
