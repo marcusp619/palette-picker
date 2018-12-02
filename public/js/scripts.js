@@ -39,18 +39,18 @@ const addProject = event => {
 };
 
 const postProject = project => {
-  return fetch('/api/v1/projects', {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
+  console.log(project);
+  return fetch("/api/v1/projects", {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
     headers: {
-      'Content-Type': 'application/json; charset=utf-8',
+      "Content-Type": "application/json; charset=utf-8",
     },
-    redirect: 'follow',
-    referrer: 'no-referrer',
     body: JSON.stringify(project),
-  }).then(response => response.json());
+  })
+    .then(response => response.json())
+    .catch(error => console.log(error.message));
 };
 const addPalette = palette => {};
 
