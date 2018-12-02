@@ -30,19 +30,12 @@ const findNewColors = () => {
 
 const addProject = event => {
   event.preventDefault();
-  //get project name
+
   const projectName = document.querySelector('.project-name').value;
-  //get pallete color
-  console.log(colorPalette);
-  //make new obj to store all in
   const newProject = {
     projectName,
   };
-  console.log(newProject);
-  //POST to server
   postProject(newProject);
-  //Validation for Post
-  //Return status msg
 };
 
 const postProject = project => {
@@ -54,6 +47,8 @@ const postProject = project => {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
     },
+    redirect: 'follow',
+    referrer: 'no-referrer',
     body: JSON.stringify(project),
   }).then(response => response.json());
 };
