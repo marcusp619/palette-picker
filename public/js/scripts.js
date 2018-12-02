@@ -50,7 +50,7 @@ const postProject = project => {
     body: JSON.stringify(project),
   })
     .then(response => response.json())
-    .catch(error => console.log(error.message));
+    .catch(error => console.log(error));
 };
 const addPalette = palette => {};
 
