@@ -43,13 +43,13 @@
         <select>
           <option value="">--Please choose a project</option>
         </select>
-        <button>Save Palette</button>
+        <button class="save-palette-btn">Save Palette</button>
       </form>
     </section>
     <section class="projects-section">
-      <form>
-        <input type="text" placeholder="New project name">
-        <button>Save Project</button>
+      <form onsubmit="addProject(event)">
+        <input class="project-name" type="text" placeholder="New project name">
+        <button class="save-project-btn">Save Project</button>
       </form>
       <section class="projects">
         <div class="project">
