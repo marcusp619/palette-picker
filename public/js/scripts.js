@@ -31,9 +31,9 @@ const findNewColors = () => {
 const addProject = event => {
   event.preventDefault();
 
-  const projectName = document.querySelector('.project-name').value;
+  const name = document.querySelector('.project-name').value;
   const newProject = {
-    projectName,
+    name,
   };
   postProject(newProject);
 };
