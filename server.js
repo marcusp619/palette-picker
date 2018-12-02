@@ -42,7 +42,7 @@ app.delete('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
     .where('id', id)
     .del()
     .then(palette => response.status(200).json(palette))
-    .catch(error => console.log(`Error deleting palette: ${error.message}`));
+    .catch(error => console.log(`Error deleting palette: ${error}`));
 });
 
 app.get('/api/v1/projects', (request, response) => {
