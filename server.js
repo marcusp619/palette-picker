@@ -65,7 +65,7 @@ app.post('/api/v1/projects', (request, response) => {
       response.status(201).json({id: project[0]});
     })
     .catch(error => {
-      response.status(500).json({error});
+      response.status(500).json({error.message});
     });
 });
 
