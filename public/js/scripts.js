@@ -126,7 +126,7 @@ const cleanedPalettes = unformattedPalettes => {
         <section class="gradient-palette-section">
           <div class="gradient-palette">${palette.id}</div>
         </section>
-        <section class="color-palette"
+        <section class="color-palette">
           <div class="palette-squares--sm">${palette.hex_1}</div>
           <div class="palette-squares--sm">${palette.hex_2}</div>
           <div class="palette-squares--sm">${palette.hex_3}</div>
@@ -208,14 +208,12 @@ const deletePalette = (projectId, paletteId) => {
   })
     .then(response => response.json())
     .catch(error => console.log(error));
-
   removePalette(event);
 };
 
 const removePalette = event => {
-  const child = event.target.parentElement.children;
-  console.log(child);
-  event.target.parentElement.remove(child);
+  const child = event.currentTarget.parentElement;
+  child.remove();
 };
 
 const toggleFreeze = event => {
