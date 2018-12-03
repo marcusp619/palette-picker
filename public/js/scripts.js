@@ -1,4 +1,5 @@
 const saveProjectBtn = document.querySelector('.save-project-btn');
+//const projectOptions = document.querySelector('.')
 const colorPalette = [];
 
 const getColors = () => {
@@ -19,7 +20,6 @@ const findNewColors = () => {
   for (let i = 0; i < activeColors.length; i++) {
     colorPalette.push(getColors());
   }
-  console.log(colorPalette);
 
   activeColors.forEach((color, i) => {
     color.setAttribute('style', `background-color:${colorPalette[i]}`);
@@ -30,29 +30,77 @@ const findNewColors = () => {
 
 const addProject = event => {
   event.preventDefault();
-
   const name = document.querySelector('.project-name').value;
   const newProject = {
     name,
   };
   postProject(newProject);
+  //fix duplications
+  getProjects();
 };
 
 const postProject = project => {
-  console.log(project);
-  return fetch("/api/v1/projects", {
-    method: "POST",
-    mode: "cors",
-    credentials: "same-origin",
+  return fetch('/api/v1/projects', {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
+      'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify(project),
   })
     .then(response => response.json())
     .catch(error => console.log(error));
 };
-const addPalette = palette => {};
+
+const getProjects = () => {
+  return fetch('/api/v1/projects')
+    .then(response => response.json())
+    .then(data => cleanProjectData(data))
+    .catch(error => console.log(error));
+};
+
+const cleanProjectData = projects => {
+  const options = document.querySelector('.project-options');
+  projects.forEach((project, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.innerHTML = project.name;
+    options.appendChild(opt);
+  });
+};
+
+const addPalette = event => {
+  event.preventDefault();
+  const htmlCollection = document.querySelector('.project-options').children;
+  const projectOptions = Array.from(htmlCollection)
+  const selectedProject = projectOptions.filter(project => project.selected === true);
+  const projectId = selectedProject[0].value;
+  // make a foreach for new obj hex1-5;
+  const paletteObj = {
+    hex1: colorPalette[0],
+    hex2: colorPalette[1],
+    hex3: colorPalette[2],
+    hex4: colorPalette[3],
+    hex5: colorPalette[4]
+  }
+  postPalette(projectId, paletteObj);
+};
+
+const postPalette = (projectId, paletteObj) => {
+  const url = `https://palette-picker-mp.herokuapp.com/api/v1/projects/${projectId}/palette`
+  return fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify(paletteObj),
+  })
+    .then(response => response.json())
+    .catch(error => console.log(error));
+}
 
 const deletePalette = palette => {};
 
@@ -61,3 +109,4 @@ const toggleFreeze = event => {
 };
 
 findNewColors();
+getProjects();
