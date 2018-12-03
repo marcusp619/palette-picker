@@ -46,7 +46,7 @@ header {
   line-height: 35px;
 }
 
-.hero-scroll-btn {
+#hero-scroll-btn {
   background: #ffffff;
   border-radius: 25px;
   box-shadow: -1px 4px 7px 2px rgba(0, 0, 0, 0.5);
