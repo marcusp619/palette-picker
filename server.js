@@ -18,7 +18,7 @@ app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
   database('palettes')
     .where('project_id', project_id)
     .select()
-    .then(palettes => response.status(200).json({message: `Palettes with the project_ id: ${project_id} were successfully fetched`}))
+    .then(palettes => response.status(200).json(palettes))
     .catch(error => console.log(`Error fetching project: ${error}`));
 });
 
