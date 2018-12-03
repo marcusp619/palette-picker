@@ -10,6 +10,17 @@ app.use(express.static('./public'));
 
 app.set('port', process.env.PORT || 3000);
 
+app.get('/api/v1/projects/palettes', (request, response) => {
+  database('palettes')
+    .select()
+    .then(palettes => {
+      response.status(200).json(palettes);
+    })
+    .catch(error => {
+      response.status(500).json({error});
+    });
+});
+
 app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
   const {project_id} = request.params;
 

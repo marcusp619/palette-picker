@@ -38,12 +38,14 @@
           <h4 class="palette-hex"></h4>
         </div>
       </div>
-      <form>
-        <button class="generate-btn">Generate New Palette!</button>
+      <button class="generate-btn">Generate New Palette!</button>
+      <form onsubmit="addPalette(event)">
         <select class="project-options">
           <option value="">--Please choose a project</option>
         </select>
-        <button onClick="addPalette(event)" class="save-palette-btn">Save Palette</button>
+        <label for="palette-name">Palette Name</label>
+        <input id="palette-name" type="text" placeholder="Palette Name" />
+        <button class="save-palette-btn">Save Palette</button>
       </form>
     </section>
     <section class="projects-section">
