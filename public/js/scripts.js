@@ -36,6 +36,7 @@ const addProject = event => {
   postProject(newProject);
   //fix duplications
   getProjects();
+  displayProjects();
 };
 
 const postProject = project => {
@@ -69,28 +70,71 @@ const cleanProjectData = projects => {
   });
 };
 
+const displayProjects = async () => {
+  const response = await fetch('/api/v1/projects');
+  const projects = await response.json();
+  const projectIds = projects.map(project => project.id);
+  const unformattedPalettes = await getPalettes(projectIds);
+  const cleanPalettes = cleanedPalettes(unformattedPalettes[0]);
+  console.log(cleanPalettes)
+  const projectSection = document.querySelector('.projects');
+  projectSection.innerHTML = cleanPalettes;
+};
+
+const getPalettes = projectIds => {
+  const promises = projectIds.map(id => {
+    return fetch(`/api/v1/projects/${id}/palettes`).then(response =>
+      response.json(),
+    );
+  });
+  return Promise.all(promises);
+};
+
+const cleanedPalettes = unformattedPalettes => {
+  const cleanData = unformattedPalettes.map(palette => {
+    const html = `
+      <div class="project">
+        <h3 class="palette-title">${palette.name}</h3
+        <section class="gradient-palette-section">
+          <div class="gradient-palette"></div>
+        </section>
+        <section class="color-palette"
+          <div class="palette-squares--sm">${palette.hex_1}</div>
+          <div class="palette-squares--sm">${palette.hex_2}</div>
+          <div class="palette-squares--sm">${palette.hex_3}</div>
+          <div class="palette-squares--sm">${palette.hex_4}</div>
+          <div class="palette-squares--sm">${palette.hex_5}</div>
+        </section>
+        <button>Delete</button>
+      </div>
+    `;
+    return html;
+  });
+  return cleanData.join('');
+};
+
+
 const addPalette = event => {
   event.preventDefault();
   const htmlCollection = document.querySelector('.project-options').children;
-  const projectOptions = Array.from(htmlCollection)
-  const selectedProject = projectOptions.filter(project => project.selected === true);
+  const projectOptions = Array.from(htmlCollection);
+  const selectedProject = projectOptions.filter(
+    project => project.selected === true,
+  );
   const projectId = selectedProject[0].value;
-  // make a foreach for new obj hex1-5;
   const paletteObj = {
     name: '',
     hex_1: colorPalette[0],
     hex_2: colorPalette[1],
     hex_3: colorPalette[2],
     hex_4: colorPalette[3],
-    hex_5: colorPalette[4]
-  }
-  console.log(paletteObj)
+    hex_5: colorPalette[4],
+  };
   postPalette(projectId, paletteObj);
 };
 
 const postPalette = (projectId, paletteObj) => {
-  console.log(projectId)
-  const url = `/api/v1/projects/${projectId}/palettes`
+  const url = `/api/v1/projects/${projectId}/palettes`;
   return fetch(url, {
     method: 'POST',
     mode: 'cors',
@@ -102,7 +146,7 @@ const postPalette = (projectId, paletteObj) => {
   })
     .then(response => response.json())
     .catch(error => console.log(error));
-}
+};
 
 const deletePalette = palette => {};
 
@@ -112,3 +156,4 @@ const toggleFreeze = event => {
 
 findNewColors();
 getProjects();
+displayProjects();
