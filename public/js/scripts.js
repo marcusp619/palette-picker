@@ -1,4 +1,5 @@
 const saveProjectBtn = document.querySelector('.save-project-btn');
+//const projectOptions = document.querySelector('.')
 const colorPalette = [];
 
 const getColors = () => {
@@ -29,12 +30,12 @@ const findNewColors = () => {
 
 const addProject = event => {
   event.preventDefault();
-
   const name = document.querySelector('.project-name').value;
   const newProject = {
     name,
   };
   postProject(newProject);
+  //fix duplications
   getProjects();
 };
 
@@ -69,7 +70,37 @@ const cleanProjectData = projects => {
   });
 };
 
-const addPalette = palette => {};
+const addPalette = event => {
+  event.preventDefault();
+  const htmlCollection = document.querySelector('.project-options').children;
+  const projectOptions = Array.from(htmlCollection)
+  const selectedProject = projectOptions.filter(project => project.selected === true);
+  const projectId = selectedProject[0].value;
+  // make a foreach for new obj hex1-5;
+  const paletteObj = {
+    hex1: colorPalette[0],
+    hex2: colorPalette[1],
+    hex3: colorPalette[2],
+    hex4: colorPalette[3],
+    hex5: colorPalette[4]
+  }
+  postPalette(projectId, paletteObj);
+};
+
+const postPalette = (projectId, paletteObj) => {
+  const url = `https://palette-picker-mp.herokuapp.com/api/v1/projects/${projectId}/palette`
+  return fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify(paletteObj),
+  })
+    .then(response => response.json())
+    .catch(error => console.log(error));
+}
 
 const deletePalette = palette => {};
 
