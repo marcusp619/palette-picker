@@ -135,9 +135,9 @@ const cleanedPalettes = unformattedPalettes => {
           <div class="palette-squares--sm">${palette.hex_4}</div>
           <div class="palette-squares--sm">${palette.hex_5}</div>
         </section>
-        <button onclick='deletePalette(${palette.project_id},${
-      palette.id
-    })'>Delete</button>
+        <button class="delete-btn" onclick='deletePalette(${
+          palette.project_id
+        },${palette.id})'>Delete</button>
       </div>
     `;
 
