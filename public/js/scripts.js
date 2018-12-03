@@ -1,5 +1,6 @@
 const saveProjectBtn = document.querySelector('.save-project-btn');
 const colorPalette = [];
+let projectsArray = [];
 
 const getColors = () => {
   const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
@@ -24,6 +25,7 @@ const findNewColors = () => {
     color.setAttribute('style', `background-color:${colorPalette[i]}`);
     color.childNodes[1].innerText = colorPalette[i];
   });
+
   return colorPalette;
 };
 
@@ -40,6 +42,7 @@ const addProject = event => {
 };
 
 const postProject = project => {
+  
   return fetch('/api/v1/projects', {
     method: 'POST',
     mode: 'cors',
@@ -54,11 +57,34 @@ const postProject = project => {
 };
 
 const getProjects = () => {
+  
   return fetch('/api/v1/projects')
     .then(response => response.json())
     .then(data => cleanProjectData(data))
     .catch(error => console.log(error));
 };
+
+const mergeProjectsAndPalettes = async () => {
+  const projectResponse = await fetch('/api/v1/projects');
+  const paletteResponse = await fetch('/api/v1/projects/palettes');
+  const projects = await projectResponse.json();
+  const addArrayProjects = await projects.map(project => {
+    
+    return (project.palettes = []);
+  });
+  const palettes = await paletteResponse.json();
+  const mergeData = palettes.reduce((acc, palette) => {
+    projects.forEach(project => {
+      if (project.id === palette.project_id) {
+        project.palettes.push(palette);
+      }
+    });
+    acc = [...projects];
+  
+    return acc;
+  }, []);
+};
+
 
 const cleanProjectData = projects => {
   const options = document.querySelector('.project-options');
@@ -76,7 +102,6 @@ const displayProjects = async () => {
   const projectIds = projects.map(project => project.id);
   const unformattedPalettes = await getPalettes(projectIds);
   const cleanPalettes = cleanedPalettes(unformattedPalettes[0]);
-  console.log(cleanPalettes)
   const projectSection = document.querySelector('.projects');
   projectSection.innerHTML = cleanPalettes;
 };
@@ -108,11 +133,12 @@ const cleanedPalettes = unformattedPalettes => {
         <button>Delete</button>
       </div>
     `;
+    
     return html;
   });
+
   return cleanData.join('');
 };
-
 
 const addPalette = event => {
   event.preventDefault();
@@ -122,8 +148,9 @@ const addPalette = event => {
     project => project.selected === true,
   );
   const projectId = selectedProject[0].value;
+  const name = document.getElementById('palette-name').value;
   const paletteObj = {
-    name: '',
+    name,
     hex_1: colorPalette[0],
     hex_2: colorPalette[1],
     hex_3: colorPalette[2],
@@ -131,10 +158,12 @@ const addPalette = event => {
     hex_5: colorPalette[4],
   };
   postPalette(projectId, paletteObj);
+  displayProjects();
 };
 
 const postPalette = (projectId, paletteObj) => {
   const url = `/api/v1/projects/${projectId}/palettes`;
+  
   return fetch(url, {
     method: 'POST',
     mode: 'cors',
@@ -157,3 +186,4 @@ const toggleFreeze = event => {
 findNewColors();
 getProjects();
 displayProjects();
+mergeProjectsAndPalettes();
