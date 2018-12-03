@@ -19,7 +19,6 @@ const findNewColors = () => {
   for (let i = 0; i < activeColors.length; i++) {
     colorPalette.push(getColors());
   }
-  console.log(colorPalette);
 
   activeColors.forEach((color, i) => {
     color.setAttribute('style', `background-color:${colorPalette[i]}`);
@@ -39,19 +38,36 @@ const addProject = event => {
 };
 
 const postProject = project => {
-  console.log(project);
-  return fetch("/api/v1/projects", {
-    method: "POST",
-    mode: "cors",
-    credentials: "same-origin",
+  return fetch('/api/v1/projects', {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
+      'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify(project),
   })
     .then(response => response.json())
     .catch(error => console.log(error));
 };
+
+const getProjects = () => {
+  return fetch('/api/v1/projects')
+    .then(response => response.json())
+    .then(data => cleanProjectData(data))
+    .catch(error => console.log(error));
+};
+
+const cleanProjectData = projects => {
+  const options = document.querySelector('.project-options');
+  projects.forEach((project, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.innerHTML = project.name;
+    options.appendChild(opt);
+  });
+};
+
 const addPalette = palette => {};
 
 const deletePalette = palette => {};
@@ -61,3 +77,4 @@ const toggleFreeze = event => {
 };
 
 findNewColors();
+getProjects();
