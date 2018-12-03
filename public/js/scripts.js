@@ -1,6 +1,6 @@
-const saveProjectBtn = document.querySelector(".save-project-btn");
 const colorPalette = [];
 let projectsArray = [];
+const forms = document.getElementsByTagName("form");
 
 const getColors = () => {
   const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
@@ -97,7 +97,6 @@ const cleanProjectData = projects => {
 };
 
 const displayProjects = html => {
-  console.log(html);
   if (html === undefined) {
     return;
   }
@@ -108,7 +107,6 @@ const displayProjects = html => {
     newDiv.innerHTML = project.name + project.palettes;
     projectSection.appendChild(newDiv);
   });
-  console.log(html);
 };
 
 const getPalettes = projectIds => {
@@ -126,7 +124,7 @@ const cleanedPalettes = unformattedPalettes => {
       <div class="project">
         <h3 class="palette-title">${palette.name}</h3
         <section class="gradient-palette-section">
-          <div class="gradient-palette"></div>
+          <div class="gradient-palette">${palette.id}</div>
         </section>
         <section class="color-palette"
           <div class="palette-squares--sm">${palette.hex_1}</div>
@@ -135,7 +133,9 @@ const cleanedPalettes = unformattedPalettes => {
           <div class="palette-squares--sm">${palette.hex_4}</div>
           <div class="palette-squares--sm">${palette.hex_5}</div>
         </section>
-        <button>Delete</button>
+        <button onclick='deletePalette(${palette.project_id},${
+      palette.id
+    })'>Delete</button>
       </div>
     `;
 
@@ -160,6 +160,7 @@ const cleanAllData = () => {
 const addPalette = event => {
   event.preventDefault();
   const htmlCollection = document.querySelector(".project-options").children;
+
   const projectOptions = Array.from(htmlCollection);
   const selectedProject = projectOptions.filter(
     project => project.selected === true
@@ -194,7 +195,28 @@ const postPalette = (projectId, paletteObj) => {
     .catch(error => console.log(error));
 };
 
-const deletePalette = palette => {};
+const deletePalette = (projectId, paletteId) => {
+  const url = `/api/v1/projects/${projectId}/palettes/${paletteId}`;
+  console.log(url);
+  fetch(url, {
+    method: "DELETE",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  })
+    .then(response => response.json())
+    .catch(error => console.log(error));
+
+  removePalette(event);
+};
+
+const removePalette = event => {
+  const child = event.target.parentElement.children;
+  console.log(child);
+  event.target.parentElement.remove(child);
+};
 
 const toggleFreeze = event => {
   //toggle class active or disable
