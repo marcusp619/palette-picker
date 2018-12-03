@@ -35,6 +35,7 @@ const addProject = event => {
     name,
   };
   postProject(newProject);
+  getProjects();
 };
 
 const postProject = project => {
