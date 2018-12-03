@@ -63,7 +63,7 @@ const cleanProjectData = projects => {
   const options = document.querySelector('.project-options');
   projects.forEach((project, i) => {
     const opt = document.createElement('option');
-    opt.value = i;
+    opt.value = project.id;
     opt.innerHTML = project.name;
     options.appendChild(opt);
   });
@@ -77,17 +77,20 @@ const addPalette = event => {
   const projectId = selectedProject[0].value;
   // make a foreach for new obj hex1-5;
   const paletteObj = {
-    hex1: colorPalette[0],
-    hex2: colorPalette[1],
-    hex3: colorPalette[2],
-    hex4: colorPalette[3],
-    hex5: colorPalette[4]
+    name: '',
+    hex_1: colorPalette[0],
+    hex_2: colorPalette[1],
+    hex_3: colorPalette[2],
+    hex_4: colorPalette[3],
+    hex_5: colorPalette[4]
   }
+  console.log(paletteObj)
   postPalette(projectId, paletteObj);
 };
 
 const postPalette = (projectId, paletteObj) => {
-  const url = `https://palette-picker-mp.herokuapp.com/api/v1/projects/${projectId}/palettes`
+  console.log(projectId)
+  const url = `/api/v1/projects/${projectId}/palettes`
   return fetch(url, {
     method: 'POST',
     mode: 'cors',

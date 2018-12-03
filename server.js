@@ -13,8 +13,6 @@ app.set('port', process.env.PORT || 3000);
 app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
   const {project_id} = request.params;
 
-  console.log(project_id);
-  
   database('palettes')
     .where('project_id', project_id)
     .select()
@@ -24,17 +22,17 @@ app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
 
 app.post('/api/v1/projects/:project_id/palettes', (request, response) => {
   const palette = request.body;
-  const {project_id} = request.params
+  const {project_id} = request.params;
 
   database('palettes')
     .insert({...palette, project_id}, 'id')
     .then(palette => {
-      response.status(201).json({id: palette[0]})
+      response.status(201).json({id: palette[0]});
     })
     .catch(error => {
-      response.status(500).json({ error });
-    })
-})
+      response.status(500).json({error});
+    });
+});
 
 app.delete('/api/v1/projects/:project_id/palettes/:id', (request, response) => {
   const {id, project_id} = request.params;
