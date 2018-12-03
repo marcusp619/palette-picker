@@ -1,5 +1,4 @@
 const saveProjectBtn = document.querySelector('.save-project-btn');
-//const projectOptions = document.querySelector('.')
 const colorPalette = [];
 
 const getColors = () => {
@@ -88,7 +87,7 @@ const addPalette = event => {
 };
 
 const postPalette = (projectId, paletteObj) => {
-  const url = `https://palette-picker-mp.herokuapp.com/api/v1/projects/${projectId}/palette`
+  const url = `https://palette-picker-mp.herokuapp.com/api/v1/projects/${projectId}/palettes`
   return fetch(url, {
     method: 'POST',
     mode: 'cors',

@@ -13,11 +13,13 @@ app.set('port', process.env.PORT || 3000);
 app.get('/api/v1/projects/:project_id/palettes', (request, response) => {
   const {project_id} = request.params;
 
+  console.log(project_id);
+  
   database('palettes')
     .where('project_id', project_id)
     .select()
-    .then(response => response.status(200).json({message: `Palette id ${id} successfully deleted`}))
-    .catch(error => console.log(`Error fetching project: ${error.message}`));
+    .then(palettes => response.status(200).json({message: `Palettes with the project_ id: ${project_id} were successfully fetched`}))
+    .catch(error => console.log(`Error fetching project: ${error}`));
 });
 
 app.post('/api/v1/projects/:project_id/palettes', (request, response) => {
@@ -30,7 +32,7 @@ app.post('/api/v1/projects/:project_id/palettes', (request, response) => {
       response.status(201).json({id: palette[0]})
     })
     .catch(error => {
-      resonse.status(500).json({ error });
+      response.status(500).json({ error });
     })
 })
 
