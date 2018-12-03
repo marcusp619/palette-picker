@@ -10,11 +10,11 @@
     <header>
       <img class="logo-img" src="assets/fill-solid.svg" alt="bucket img"/>
       <h1 class="logo-name">Palette Picker</h1>
-          </header>
+    </header>
     <section class="hero-section">
       <h1 class="hero-title">Select and save your color palettes</h1>
       <p class="hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu </p>
-      <button class="hero-scroll-btn">Start Now</button>
+      <button id="hero-scroll-btn">Start Now</button>
     </section>
     <div class="down-arrow-section">
       <img class="down-arrow" src="assets/angle-double-down-solid.svg" alt="down arrow" />
@@ -38,20 +38,20 @@
           <h4 class="palette-hex"></h4>
         </div>
       </div>
-      <button class="generate-btn">Generate New Palette!</button>
-      <form onsubmit="addPalette(event)">
+      <button id="generate-btn">Generate New Palette!</button>
+      <form>
         <select class="project-options">
           <option value="">--Please choose a project</option>
         </select>
         <label for="palette-name">Palette Name</label>
         <input id="palette-name" type="text" placeholder="Palette Name" />
-        <button class="save-palette-btn">Save Palette</button>
+        <button id="save-palette-btn">Save Palette</button>
       </form>
     </section>
     <section class="projects-section">
-      <form onsubmit="addProject(event)">
+      <form>
         <input class="project-name" type="text" placeholder="New project name">
-        <button onclick="displayProjects()" class="save-project-btn">Save Project</button>
+        <button id="save-project-btn">Save Project</button>
       </form>
       <section class="projects">
     </section>

@@ -1,6 +1,8 @@
-const colorPalette = [];
+let colorPalette = [];
 let projectsArray = [];
-const forms = document.getElementsByTagName("form");
+const generateBtn = document.getElementById("generate-btn");
+const savePaletteBtn = document.getElementById("save-palette-btn");
+let saveProjectBtn = document.getElementById("save-project-btn");
 
 const getColors = () => {
   const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
@@ -15,15 +17,16 @@ const getColors = () => {
 };
 
 const findNewColors = () => {
-  const activeColors = document.querySelectorAll(".palette-squares");
+  console.log("hey");
+  colorPalette = [];
+  let activeColors = document.querySelectorAll(".palette-squares");
 
   for (let i = 0; i < activeColors.length; i++) {
     colorPalette.push(getColors());
   }
-
   activeColors.forEach((color, i) => {
     color.setAttribute("style", `background-color:${colorPalette[i]}`);
-    color.childNodes[1].innerText = colorPalette[i];
+    color.childNodes[1].textContent = colorPalette[i];
   });
 
   return colorPalette;
@@ -31,10 +34,9 @@ const findNewColors = () => {
 
 const addProject = event => {
   event.preventDefault();
-  const name = document.querySelector(".project-name").value;
-  const newProject = {
-    name
-  };
+  let name = document.querySelector(".project-name").value;
+  let newProject = { name };
+
   postProject(newProject);
   //fix duplications
   getProjects();
@@ -63,14 +65,14 @@ const getProjects = () => {
 };
 
 const mergeProjectsAndPalettes = async () => {
-  const projectResponse = await fetch("/api/v1/projects");
-  const paletteResponse = await fetch("/api/v1/projects/palettes");
-  const projects = await projectResponse.json();
-  const addArrayProjects = await projects.map(project => {
+  let projectResponse = await fetch("/api/v1/projects");
+  let paletteResponse = await fetch("/api/v1/projects/palettes");
+  let projects = await projectResponse.json();
+  let addArrayProjects = await projects.map(project => {
     return (project.palettes = []);
   });
-  const palettes = await paletteResponse.json();
-  const mergedData = palettes.reduce((acc, palette) => {
+  let palettes = await paletteResponse.json();
+  let mergedData = palettes.reduce((acc, palette) => {
     projects.forEach(project => {
       if (project.id === palette.project_id) {
         project.palettes.push(palette);
@@ -78,7 +80,7 @@ const mergeProjectsAndPalettes = async () => {
     });
     acc = [...projects];
     projectsArray = [...acc];
-    const displayData = cleanAllData();
+    let displayData = cleanAllData();
     acc = displayData;
 
     return acc;
@@ -87,9 +89,9 @@ const mergeProjectsAndPalettes = async () => {
 };
 
 const cleanProjectData = projects => {
-  const options = document.querySelector(".project-options");
+  let options = document.querySelector(".project-options");
   projects.forEach((project, i) => {
-    const opt = document.createElement("option");
+    let opt = document.createElement("option");
     opt.value = project.id;
     opt.innerHTML = project.name;
     options.appendChild(opt);
@@ -97,20 +99,20 @@ const cleanProjectData = projects => {
 };
 
 const displayProjects = html => {
+  console.log("display");
   if (html === undefined) {
     return;
   }
-  const projectSection = document.querySelector(".projects");
+  let projectSection = document.querySelector(".projects");
   html.forEach(project => {
-    const newDiv = document.createElement("div");
-    console.log(newDiv);
+    let newDiv = document.createElement("div");
     newDiv.innerHTML = project.name + project.palettes;
     projectSection.appendChild(newDiv);
   });
 };
 
 const getPalettes = projectIds => {
-  const promises = projectIds.map(id => {
+  let promises = projectIds.map(id => {
     return fetch(`/api/v1/projects/${id}/palettes`).then(response =>
       response.json()
     );
@@ -119,8 +121,8 @@ const getPalettes = projectIds => {
 };
 
 const cleanedPalettes = unformattedPalettes => {
-  const cleanData = unformattedPalettes.map(palette => {
-    const html = `
+  let cleanData = unformattedPalettes.map(palette => {
+    let html = `
       <div class="project">
         <h3 class="palette-title">${palette.name}</h3
         <section class="gradient-palette-section">
@@ -146,9 +148,9 @@ const cleanedPalettes = unformattedPalettes => {
 };
 
 const cleanAllData = () => {
-  const projectsData = projectsArray.map(project => {
-    const cleanPalettes = cleanedPalettes(project.palettes);
-    const cleanedProject = {
+  let projectsData = projectsArray.map(project => {
+    let cleanPalettes = cleanedPalettes(project.palettes);
+    let cleanedProject = {
       name: `<h1>${project.name}</h1>`,
       palettes: cleanPalettes
     };
@@ -159,15 +161,15 @@ const cleanAllData = () => {
 
 const addPalette = event => {
   event.preventDefault();
-  const htmlCollection = document.querySelector(".project-options").children;
+  let htmlCollection = document.querySelector(".project-options").children;
 
-  const projectOptions = Array.from(htmlCollection);
-  const selectedProject = projectOptions.filter(
+  let projectOptions = Array.from(htmlCollection);
+  let selectedProject = projectOptions.filter(
     project => project.selected === true
   );
-  const projectId = selectedProject[0].value;
-  const name = document.getElementById("palette-name").value;
-  const paletteObj = {
+  let projectId = selectedProject[0].value;
+  let name = document.getElementById("palette-name").value;
+  let paletteObj = {
     name,
     hex_1: colorPalette[0],
     hex_2: colorPalette[1],
@@ -180,7 +182,7 @@ const addPalette = event => {
 };
 
 const postPalette = (projectId, paletteObj) => {
-  const url = `/api/v1/projects/${projectId}/palettes`;
+  let url = `/api/v1/projects/${projectId}/palettes`;
 
   return fetch(url, {
     method: "POST",
@@ -196,7 +198,7 @@ const postPalette = (projectId, paletteObj) => {
 };
 
 const deletePalette = (projectId, paletteId) => {
-  const url = `/api/v1/projects/${projectId}/palettes/${paletteId}`;
+  let url = `/api/v1/projects/${projectId}/palettes/${paletteId}`;
   console.log(url);
   fetch(url, {
     method: "DELETE",
@@ -212,7 +214,7 @@ const deletePalette = (projectId, paletteId) => {
 };
 
 const removePalette = event => {
-  const child = event.currentTarget.parentElement;
+  let child = event.currentTarget.parentElement;
   child.remove();
 };
 
@@ -224,3 +226,7 @@ findNewColors();
 getProjects();
 displayProjects();
 mergeProjectsAndPalettes();
+
+generateBtn.addEventListener("click", findNewColors);
+savePaletteBtn.addEventListener("click", addPalette);
+saveProjectBtn.addEventListener("click", addProject);
